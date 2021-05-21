@@ -25,10 +25,12 @@ module.exports = {
 				//the fonts will be emmited to public/assets/fonts/ folder 
 				//the fonts will be put in the DOM <style> tag as eg. @font-face{ src:url(assets/fonts/font.ttf); }  
 			}
-		},	
+		},
 		{
 			test: /\.css$/,
 			loaders: ["style-loader","css-loader"]
-		}]
+		},
+		{ test: /\.handlebars$/, loader: "handlebars-loader" }
+		]
 	}
 };
