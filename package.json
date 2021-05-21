@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tbesluau/sampleblock.git"
+    "url": "git+https://github.com/wysdi/salesforce-custom-block.git"
   },
-  "author": "Thomas Besluau",
+  "author": "Wayan Sudiarta",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tbesluau/sampleblock/issues"
+    "url": "https://github.com/wysdi/salesforce-custom-block/issues"
   },
-  "homepage": "https://github.com/tbesluau/sampleblock#readme",
+  "homepage": "https://github.com/wysdi/salesforce-custom-block#readme",
   "dependencies": {
     "@salesforce-ux/design-system": "^2.5.2",
     "alpinejs": "^2.8.2",
