@@ -1,69 +1,141 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Maps Block</title>
-	</head>
-	<body>
-		<article class="slds-card">
-  <div class="slds-card__header slds-grid">
-    <header class="slds-media slds-media_center slds-has-flexi-truncate">
-      <div class="slds-media__figure">
-        <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
-          <svg class="slds-icon slds-icon_small" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact" />
-          </svg>
-        </span>
-      </div>
-      <div class="slds-media__body">
-        <h2>
-          <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
-            <span class="slds-text-heading_small">Tix Edm Cardfireb</span>
-          </a>
-        </h2>
-      </div>
-    </header>
-  </div>
-  <div class="slds-card__body slds-card__body_inner">
-	  <div id="workspace" x-data="cardApp()">
-				<div class="slds-form-element">
-					<label class="slds-form-element__label" >name</label>
-					<div class="slds-form-element__control">
-						<input type="text"  class="slds-input" placeholder="Name" x-model="fields.name" />
+<head>
+	<title>Maps Block</title>
+</head>
+<body>
+<article class="slds-card">
+	<div class="slds-card__header slds-grid">
+		<header class="slds-media slds-media_center slds-has-flexi-truncate">
+			<div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact" />
+                            </svg>
+                        </span>
+			</div>
+			<div class="slds-media__body">
+				<h2>
+					<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+						<span class="slds-text-heading_small">Salesforce Block</span>
+					</a>
+				</h2>
+			</div>
+		</header>
+	</div>
+	<div class="slds-card__body slds-card__body_inner">
+		<div id="workspace" x-data="cardApp()" x-init="initApp()">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label" for="combobox-id-1">Select User</label>
+				<div class="slds-form-element__control">
+					<div class="slds-combobox_container">
+						<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" :class="{ 'slds-is-open' : optionsVisible}" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+							<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+								<template x-if="isEmpty(selectedOption)">
+									<div>
+										<input
+												type="text"
+												class="slds-input slds-combobox__input"
+												id="combobox-id-1"
+												aria-autocomplete="list"
+												aria-controls="listbox-id-1"
+												autocomplete="off"
+												role="textbox"
+												placeholder="Search..."
+												@click="optionsVisible = !optionsVisible"
+												x-model="search"
+										/>
+										<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                                    <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                                    </svg>
+                                                </span>
+									</div>
+								</template>
+								<template x-if="!isEmpty(selectedOption)">
+									<div>
+                                                <span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="Account">
+                                                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                                    </svg>
+                                                    <span class="slds-assistive-text">Account</span>
+                                                </span>
+										<input
+												type="text"
+												class="slds-input slds-combobox__input slds-combobox__input-value"
+												id="combobox-id-5"
+												aria-controls="listbox-id-5"
+												autocomplete="off"
+												role="textbox"
+												placeholder="Select an Option…"
+												readonly=""
+												@click="optionsVisible = !optionsVisible"
+												:value="selectedOption.name"
+										/>
+										<button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option" @click="selectedOption ={}">
+											<svg class="slds-button__icon" aria-hidden="true">
+												<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+											</svg>
+											<span class="slds-assistive-text">Remove selected option</span>
+										</button>
+									</div>
+								</template>
+							</div>
+							<div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" @click.away="optionsVisible = false" >
+								<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+									<template x-for="event in filteredOptions()">
+										<li role="presentation" class="slds-listbox__item">
+											<div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" @click="onSelected(event)">
+														<span class="slds-media__figure slds-listbox__option-icon">
+															<span class="slds-icon_container slds-icon-standard-account">
+																<svg class="slds-icon slds-icon_small" aria-hidden="true">
+																	<use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+																</svg>
+															</span>
+														</span>
+												<span class="slds-media__body">
+															<span class="slds-listbox__option-text slds-listbox__option-text_entity" x-text="event.name"></span>
+															<span class="slds-listbox__option-meta slds-listbox__option-meta_entity" x-text="event.company.name"></span>
+														</span>
+											</div>
+										</li>
+									</template>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
 
-		  <div class="slds-form-element">
-			  <label class="slds-form-element__label" >email</label>
-			  <div class="slds-form-element__control">
-				  <input type="text"  class="slds-input" placeholder="Name" x-model="fields.email" />
-			  </div>
-		  </div>
+			<template x-if="!isEmpty(formData)">
+				<div style="margin-top: 50px;">
 
-		  <div class="slds-form-element">
-			  <label class="slds-form-element__label" >message</label>
-			  <div class="slds-form-element__control">
-				  <input type="text" class="slds-input" placeholder="Name" x-model="fields.message" />
-			  </div>
-		  </div>
-	<!--			<div class="slds-form-element">-->
-	<!--				<label class="slds-form-element__label" for="text-input-id-1">Address or Location Name</label>-->
-	<!--				<div class="slds-form-element__control">-->
-	<!--					<input type="text" id="text-input-id-1" class="slds-input" placeholder="e.g. Salesforce Tower Indianapolis" />-->
-	<!--				</div>-->
-	<!--			</div>-->
+					<div class="slds-form-element">
+						<label class="slds-form-element__label">Name</label>
+						<div class="slds-form-element__control">
+							<input type="text" class="slds-input" placeholder="Name" x-model="formData.name" x-on:change="onChange();"/>
+						</div>
+					</div>
+					<div class="slds-form-element">
+						<label class="slds-form-element__label">Phone</label>
+						<div class="slds-form-element__control">
+							<input type="text" class="slds-input" placeholder="Name" x-model="formData.phone" x-on:change="onChange();" />
+						</div>
+					</div>
+					<div class="slds-form-element">
+						<label class="slds-form-element__label">Email</label>
+						<div class="slds-form-element__control">
+							<input type="text" class="slds-input" placeholder="Name" x-model="formData.email" x-on:change="onChange();" />
+						</div>
+					</div>
+				</div>
+			</template>
 
-	<!--			<div class="slds-form-element">-->
-	<!--				<label class="slds-form-element__label" for="text-input-id-2">Link Wrap</label>-->
-	<!--				<div class="slds-form-element__control">-->
-	<!--					<input type="text" id="text-input-id-2" class="slds-input" placeholder="Optional url for Link wrap" />-->
-	<!--				</div>-->
-	<!--			</div>-->
-		  <button x-on:click="submitData()">ddd</button>
-
-	  </div>
-  </div>
+<!--			<pre x-text="JSON.stringify(formData)" style="white-space: pre-wrap;"></pre>-->
+		</div>
+	</div>
 </article>
-		
-		<script src="./main.js"></script>
-	</body>
+
+<script src="./main.js"></script>
+</body>
 </html>
